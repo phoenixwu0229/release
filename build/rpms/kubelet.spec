@@ -1,7 +1,8 @@
 %global KUBE_MAJOR 1
-%global KUBE_MINOR 13
+%global KUBE_MINOR 18
 %global KUBE_PATCH 0
 %global KUBE_VERSION %{KUBE_MAJOR}.%{KUBE_MINOR}.%{KUBE_PATCH}
+%global KUBE_RPM_RELEASE alpha.0.285+74cbf0dc33a468
 %global RPM_RELEASE 0
 %global ARCH amd64
 
@@ -11,24 +12,24 @@
 %define semver() (%1 * 256 * 256 + %2 * 256 + %3)
 %global KUBE_SEMVER %{semver %{KUBE_MAJOR} %{KUBE_MINOR} %{KUBE_PATCH}}
 
-%global CNI_VERSION 0.7.5
-%global CRI_TOOLS_VERSION 1.13.0
+%global CNI_VERSION 0.8.2
+%global CRI_TOOLS_VERSION 1.16.1
 
 Name: kubelet
 Version: %{KUBE_VERSION}
-Release: %{RPM_RELEASE}
+Release: %{KUBE_RPM_RELEASE}
 Summary: Container cluster management
 License: ASL 2.0
 
 URL: https://kubernetes.io
-Source0: https://dl.k8s.io/v%{KUBE_VERSION}/bin/linux/%{ARCH}/kubelet
+Source0: kubelet
 Source1: kubelet.service
-Source2: https://dl.k8s.io/v%{KUBE_VERSION}/bin/linux/%{ARCH}/kubectl
-Source3: https://dl.k8s.io/v%{KUBE_VERSION}/bin/linux/%{ARCH}/kubeadm
+Source2: kubectl
+Source3: kubeadm
 Source4: 10-kubeadm.conf
-Source5: https://dl.k8s.io/network-plugins/cni-plugins-%{ARCH}-v%{CNI_VERSION}.tgz
+Source5: cni-plugins-linux-%{ARCH}-v%{CNI_VERSION}.tgz
 Source6: kubelet.env
-Source7: https://github.com/kubernetes-sigs/cri-tools/releases/download/v%{CRI_TOOLS_VERSION}/crictl-v%{CRI_TOOLS_VERSION}-linux-%{ARCH}.tar.gz
+Source7: crictl-v%{CRI_TOOLS_VERSION}-linux-%{ARCH}.tar.gz
 
 BuildRequires: systemd
 BuildRequires: curl
@@ -58,7 +59,7 @@ Binaries required to provision container networking.
 %package -n kubectl
 
 Version: %{KUBE_VERSION}
-Release: %{RPM_RELEASE}
+Release: %{KUBE_RPM_RELEASE}
 Summary: Command-line utility for interacting with a Kubernetes cluster.
 
 %description -n kubectl
@@ -67,7 +68,7 @@ Command-line utility for interacting with a Kubernetes cluster.
 %package -n kubeadm
 
 Version: %{KUBE_VERSION}
-Release: %{RPM_RELEASE}
+Release: %{KUBE_RPM_RELEASE}
 Summary: Command-line utility for administering a Kubernetes cluster.
 Requires: kubelet >= 1.13.0
 Requires: kubectl >= 1.13.0

@@ -30,10 +30,10 @@ else
   #GOARCH/RPMARCH
   ARCHS=(
     amd64/x86_64
-    arm/armhfp
-    arm64/aarch64
-    ppc64le/ppc64le
-    s390x/s390x
+#    arm/armhfp
+#    arm64/aarch64
+#    ppc64le/ppc64le
+#    s390x/s390x
   )
 fi
 

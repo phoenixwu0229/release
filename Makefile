@@ -26,6 +26,11 @@ build-debs: ## Build debs
 	PACKAGE_TYPE="debs" ./build/package.sh
 
 build-rpms: ## Build rpms
+	cp ../kubernetes/_output/bin/kubelet ./build/rpms/
+	cp ../kubernetes/_output/bin/kubectl ./build/rpms/
+	cp ../kubernetes/_output/bin/kubeadm ./build/rpms/
+	cp ../packages/cni-plugins-linux-amd64-v0.8.2.tgz ./build/rpms
+	cp ../packages/crictl-v1.16.1-linux-amd64.tar.gz ./build/rpms
 	PACKAGE_TYPE="rpms" ./build/package.sh
 	
 verify-published-debs: ## Ensure debs have been published
