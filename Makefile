@@ -20,7 +20,15 @@ SHELL:=/usr/bin/env bash
 
 ##@ Package
 
-.PHONY: verify-published-debs verify-published-rpms
+.PHONY: verify-published-debs verify-published-rpms build-rpms
+
+build-rpms: ## Build rpms
+	cp ../kubernetes/_output/bin/kubelet ./rpm
+	cp ../kubernetes/_output/bin/kubectl ./rpm
+	cp ../kubernetes/_output/bin/kubeadm ./rpm
+	cp ../packages/cni-plugins-linux-amd64-v0.8.2.tgz ./rpm
+	cp ../packages/crictl-v1.16.1-linux-amd64.tar.gz ./rpm
+	cd rpm; ./docker-build.sh
 
 verify-published-debs: ## Ensure debs have been published
 	./hack/packages/verify-published.sh debs
